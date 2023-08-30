@@ -1,0 +1,231 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 0 3rem;
+  margin-top: 1rem;
+}
+
+.memories-title {
+  padding: 0 3rem;
+}
+
+.card-memories {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 1rem;
+}
+
+/* CSS */
+.btn {
+  /* display: flex; */
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 167, 62, 1) 0%,
+    rgba(102, 247, 113, 1) 100%
+  );
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.btn:hover,
+.btn-2:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.btn:active,
+.btn:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+
+.btn-2 {
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, rgb(224, 15, 4) 0%, rgb(255, 145, 0) 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.card-grid .title {
+  text-decoration: none;
+  color: green;
+  font-size: 1.62rem;
+}
+
+.search-div {
+  display: grid;
+  grid-template-columns: 200px 200px 100px;
+  gap: 1rem;
+  padding: 0 3rem;
+}
+
+.css-c789a6-MuiStack-root {
+  padding: 0 3rem;
+  margin-top: 3rem;
+}
+
+.form-groups button {
+  height: 100%;
+  width: 100%;
+
+
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 167, 62, 1) 0%,
+    rgba(102, 247, 113, 1) 100%
+  );
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.round-input {
+  border-radius: 20px !important;
+}
+
+.card-memories {
+  position: relative;
+  
+}
+
+
+
+
+
+.ReactModal__Content {
+  position: relative;
+  padding: 3rem 2rem !important;
+}
+
+.ReactModal__Content .close-btn {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+
+
+.delete-div {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  display: none;
+}
+
+
+.delete-div button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer; 
+}
+
+
+.card-memories:hover .delete-div {
+  display: block;
+  /* background-color: aliceblue; */
+}
+
+
+.img-overlay {
+  position: relative;
+}
+
+.center-div {
+  width: 70%;
+  margin: 4rem auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 20px;
+  left: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .6s;
+}
+
+.textbox {
+  height: 30vh !important;
+}
+
+.card-memories:hover .overlay{
+  opacity: 1;
+}
+
+.overlay-div {
+  display: flex;
+  gap: .4rem;
+}
+
+
+.overlay button {
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

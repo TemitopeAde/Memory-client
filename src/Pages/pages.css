@@ -1,0 +1,83 @@
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  height: 40px;
+  padding-left: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-group button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.7s;
+}
+
+.form-group button {
+  background-color: #45a049;
+}
+
+
+.error {
+  color: crimson;
+}
+
+.login-btn.disabled-btn {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+
+.form-controls {
+  width: 100%;
+  height: 200px;
+  padding-left: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.containers {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.memory-img {
+  height: 400px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.meta {
+  text-align: center;
+}

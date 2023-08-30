@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { AnimatePresence } from "framer-motion";
+import Memories from './Pages/Memories';
+import SingleMemory from './Pages/SingleMemory';
+import Signup from './Pages/Signup';
+import Signin from './Pages/Signin';
+import AddMemoryForm from './Components/AddMemoryForm';
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AnimatePresence>
+      <Routes>
+        <Route exact path="/" element={<Memories />} />
+        <Route path="/memories" element={<SingleMemory />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/post/:id" element={<SingleMemory />} />
+        <Route path="/add-memory" element={<AddMemoryForm />} />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
