@@ -17,7 +17,7 @@ const Search = () => {
       
     }
 
-    // dispatch(searchMemories(values))
+    dispatch(searchMemories(values))
   };
 
   const initialValues = {

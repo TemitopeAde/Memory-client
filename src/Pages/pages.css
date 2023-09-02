@@ -68,16 +68,27 @@
 }
 
 .containers {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 }
 
 .memory-img {
   height: 400px;
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
 }
 
-.meta {
-  text-align: center;
+.wrapper {
+  padding: 0 6rem;
+}
+
+.memory-flex {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 3rem;
+}
+
+.meta h1 {
+  font-size: 2rem;
+  text-transform: capitalize;
 }

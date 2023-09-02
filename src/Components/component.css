@@ -2,12 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  padding: 0 3rem;
   margin-top: 1rem;
-}
-
-.memories-title {
-  padding: 0 3rem;
 }
 
 .card-memories {
@@ -75,7 +70,6 @@
   display: grid;
   grid-template-columns: 200px 200px 100px;
   gap: 1rem;
-  padding: 0 3rem;
 }
 
 .css-c789a6-MuiStack-root {
@@ -198,7 +192,44 @@
 
 
 
+.add-memory textarea {
+  height: 30vh;
+}
 
+.add-memory h1 {
+  color: #5383d3;
+  text-align: center;
+}
+
+.add-memory label {
+  margin-bottom: .5rem;
+  display: block;
+}
+
+.add-memory button {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:rgba(20, 167, 62, 1);
+  outline: none;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: white;
+  transition: .5s;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.add-memory button:hover {
+  background: aquamarine;
+}
+
+.add-btn {
+  margin: 0 auto
+}
 
 
 

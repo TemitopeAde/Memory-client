@@ -1,166 +1,81 @@
-import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useSelector, useDispatch } from 'react-redux';
-import { createMemory } from '../state/actions';
-import Loader from '../Components/Loader';
-import { Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useForm } from "react-hook-form"
+import { useDispatch } from 'react-redux';
+import { createMemory } from '../state/actions/index';
 
 
-const AddMemory = () => {
-  const loading = useSelector((state) => state.loader.loading);
-  const status = useSelector((state) => state.memory.statusText);
-  console.log(status);
-
-  const initialValues = {
-    title: "",
-    message: "",
-    name: "",
-  };
-
+function App() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const [title, setTitle] = useState("");
+  const [memory, setMemory] = useState("");
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
-  
-  const validate = (values) => {
-    let errors = {};
-    if (!values.title) {
-      errors.title = "Title is required";
-    } else if (values.title.length < 2) {
-      errors.title = "Title is too short";
-    }
 
-    if (!values.message) {
-      errors.message = "Message is required"
-    }
-
-    if (!values.name) {
-      errors.name = "Name is required"
-    }
-
-
-
-    return errors;
+  const handleFormSubmit = async (e) => {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('message', memory);
+    formData.append('image', image);
+    dispatch(createMemory(formData));
+    setTitle("")
+    setMemory("")
+    setImage("")
   };
 
-  const submitForm = (values) => {
-    console.log(values);
-    dispatch(createMemory(values))
-  }
-
-  if (loading) return <Loader />
-
-  if (status) return <Navigate to="/" />
 
   return (
-    <div>
-      <Formik
-        initialValues={initialValues}
-        validate={validate}
-        onSubmit={submitForm}
-      >
-        {
-          (formik) => {
-            const {
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              touched,
-              handleBlur,
-              isValid,
-              dirty,
-            } = formik;
-            return (
-              <Form>
-                <div className="form-group">
-                  <label htmlFor="">Title</label>
-                  <Field
-                    type="text"
-                    name="title"
-                    value={values.title}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.title &&
-                        touched.title
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  >
+    <div className='add-memory'>
+      <h1>Add a new Memory</h1>
+      <form style={{ display: "grid", gap: "15px" }} onSubmit={handleSubmit(handleFormSubmit)} >
+        <div>
+          <label htmlFor="">Title</label>
+          <input
+            {...register("title", { required: true })}
+            className='form-control'
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          
+          {errors.title?.type === "required" && (
+            <p role="alert">Title is required</p>
+          )}
+        </div>
 
-                  </Field>
-                  <ErrorMessage
-                    name="title"
-                    component="span"
-                    className="error"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="">Name</label>
-                  <Field
-                    type="text"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.name &&
-                        touched.name
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  >
-                  </Field>
-                  <ErrorMessage
-                    name="name"
-                    component="span"
-                    className="error"
-                  />
-                </div>
-                <div className='form-group'>
-                  <label htmlFor="email">Message</label>
-                  <Field
-                    as="textarea"
-                    name="message"
-                    value={values.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.message &&
-                        touched.message
-                        ? "input-error form-control textbox"
-                        : "form-control textbox"
-                    }
-                  />
-                  <ErrorMessage
-                    name="message"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+        <div>
+          <label htmlFor="">Memories</label>
+          <textarea {...register("message", { required: true })} onChange={(e) => setMemory(e.target.value)} className='form-control'>
 
-                <div className="form-group">
-                  <button
-                    onClick={() => handleSubmit}
-                    type="submit"
-                    className={
-                      dirty && isValid
-                        ? "btn login-btn"
-                        : "login-btn disabled-btn"
-                    }
-                    disabled={!(dirty && isValid)}
-                    style={{ flexBasis: "35%" }}
-                  >
-                    Create now
+          </textarea>
+          {errors.message?.type === "required" && (
+            <p role="alert">Memories is required</p>
+          )}
+        </div>
 
-                  </button>
+        <div>
+          <input
+            {...register("image", { required: true })}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          {errors.image?.type === "required" && (
+            <p role="alert">Image is required</p>
+          )}
+        </div>
 
-                </div>
-              </Form>
-            )
-          }
-        }
-      </Formik>
+        <div className='add-btn'>
+          <button type="submit">Submit</button>
+        </div>
+
+        
+      </form>
     </div>
-  )
+  );
 }
 
-export default AddMemory
+export default App;

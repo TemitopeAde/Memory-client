@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { Formik, Form, Field } from "formik";
+import { Link } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -24,6 +23,7 @@ const Memory = () => {
   const numberOfPages = useSelector((state) => state.memory.numberOfPage);
   const currentPage = useSelector((state) => state.memory.currentPage);
   const token = useSelector((state) => state.auth.token);
+
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -60,18 +60,16 @@ const Memory = () => {
   }, [currentId])
 
 
-  console.log(memories);
-
   const handleDelete = (id) => {
     dispatch(deletePost(id))
     dispatch(getMemories(pageNumber));
   }
 
-  // console.log(loading);
+  console.log(memories);
 
   if (loading) return <Loader />
   return (
-    <>
+    <div className='wrapper'>
       <h2 className='memories-title'>My Memories</h2>
       <Search />
       <div className='card-grid'>
@@ -80,9 +78,8 @@ const Memory = () => {
           return (
             <div key={index} className='card-memories'>
               <div className='img-overlay'>
-                <img  src={image} alt="" />
-
-                <div className="overlay">
+                <img src={image} alt="memories" />
+                {token && <div className="overlay">
                   <div className="overlay-div">
                     <div className='over edit'>
                       <button onClick={() => handleEdit(res._id)}>
@@ -97,14 +94,15 @@ const Memory = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div>}
+
               </div>
               <div>
                 <Link className='title' to={`/post/${res._id}`}>{res.title}</Link>
                 <p style={{ textTransform: "capitalize" }}>{res.message}</p>
               </div>
 
-              
+
 
             </div>
 
@@ -124,7 +122,7 @@ const Memory = () => {
 
       {currentId && <FormModal currentId={currentId} setCurrentId={setCurrentId} />}
 
-    </>
+    </div>
   )
 }
 

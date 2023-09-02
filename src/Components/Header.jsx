@@ -12,34 +12,11 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      width: "60%"
-    },
-  };
-
+  
   const navigate = useNavigate();
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  Modal.setAppElement("body")
-
+  
   return (
-    <header className="header-fixed">
+    <header className="header-fixed wrapper">
 
       <div className="header-limiter">
         <h1>
@@ -56,8 +33,6 @@ const Header = () => {
           <Link className='btn' to="/signin">Login</Link>
           <Link className='btn-2' to="/signup">Sign up</Link>
         </nav>}
-
-
       </div>
 
       <FormModal />

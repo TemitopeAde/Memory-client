@@ -2,11 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Navigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import "./pages.css";
 import { signin } from '../state/actions';
 
 const Signin = () => {
+  const { register, handleSubmit } = useForm()
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   console.log(token);

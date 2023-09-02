@@ -68,7 +68,7 @@ export const likePost = (id) => async (dispatch, getState) => {
     payload: null
   })
 
-  
+
 
   await axios.patch(url, {}, config)
     .then((result) => {
@@ -290,27 +290,25 @@ export const searchMemories = (data) => async (dispatch) => {
 
 
 export const createMemory = (data) => async (dispatch, getState) => {
+  console.log(data)
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${getState().auth.token}`,
     },
   };
 
-  const { title, creator, name, message } = data;
   const url = `http://localhost:5000/posts`;
 
 
-  const body = JSON.stringify({ title, creator, name, message });
+  // dispatch({
+  //   type: LOADING,
+  //   payload: null
+  // })
 
-  dispatch({
-    type: LOADING,
-    payload: null
-  })
-
-  await axios.post(url, body, config)
+  await axios.post(url, data, config)
     .then((result) => {
-      // console.log(result);
+      console.log(result);
       dispatch({
         type: ADD_MEMORIES_SUCCESS,
         payload: result
@@ -380,4 +378,21 @@ export const resetStatus = () => async (dispatch) => {
     type: RESET_STATUS,
     payload: null
   })
+}
+
+
+
+export const createPost = (data) => async (dispatch, getState) => {
+  console.log(data, "data");
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${getState().auth.token}`,
+    },
+  };
+
+  const url = `http://localhost:5000/upload`;
+
+  await axios.post(url, data, config)
+
 }

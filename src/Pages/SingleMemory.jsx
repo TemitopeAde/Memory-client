@@ -10,7 +10,6 @@ const SingleMemory = () => {
   const dispatch = useDispatch();
   const memory = useSelector((state) => state.memory.memories);
   console.log(memory);
-  console.log(id);
 
   useEffect(() => {
     dispatch(getSingleMemories(id))
@@ -19,14 +18,20 @@ const SingleMemory = () => {
   return (
     <>
       <Header />
-      <div className="containers">
-        <div className='meta'>
-          <h3>{memory.title}</h3>
-          <h4>{memory.name}</h4>
+      <div className='memory-flex wrapper'>
+        <div className="containers">
+          <div className='meta'>
+            <h1>{memory.title}</h1>
+          </div>
+          <img className='memory-img' src={memory?.image} alt="memory" />
+          <p>{memory.message}</p>
         </div>
-        <img className='memory-img' src={img} alt="" />
-        <p>{memory.message}</p>
+
+        <div>
+
+        </div>
       </div>
+      
     </>
     
   )
