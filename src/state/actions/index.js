@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_MEMORIES_FAILED, ADD_MEMORIES_SUCCESS, DELETE_MEMORIES_FAILED, DELETE_MEMORIES_SUCCESS, EDIT_MEMORIES_FAILED, EDIT_MEMORIES_SUCCESS, GET_ALL_MEMORIES_FAILED, GET_ALL_MEMORIES_SUCCESS, GET_SINGLE_MEMORY_FAILED, GET_SINGLE_MEMORY_SUCCESS, LIKE_POST_FAILED, LIKE_POST_SUCCESS, LOADING, LOGOUT, NOT_LOADING, RESET_STATUS, SIGNIN_FAILED, SIGNIN_SUCCESS, SIGNUP_FAILED, SIGNUP_SUCCESS } from './types';
+import { SEARCH_MEMORIES, SEARCH_MEMORIES_FAILED, ADD_MEMORIES_FAILED, ADD_MEMORIES_SUCCESS, DELETE_MEMORIES_FAILED, DELETE_MEMORIES_SUCCESS, EDIT_MEMORIES_FAILED, EDIT_MEMORIES_SUCCESS, GET_ALL_MEMORIES_FAILED, GET_ALL_MEMORIES_SUCCESS, GET_SINGLE_MEMORY_FAILED, GET_SINGLE_MEMORY_SUCCESS, LIKE_POST_FAILED, LIKE_POST_SUCCESS, LOADING, LOGOUT, NOT_LOADING, RESET_STATUS, SIGNIN_FAILED, SIGNIN_SUCCESS, SIGNUP_FAILED, SIGNUP_SUCCESS, GET_COMMENT, GET_COMMENT_FAILED, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILED } from './types';
 
 
 export const signin = (data) => async (dispatch) => {
@@ -42,7 +42,6 @@ export const signin = (data) => async (dispatch) => {
     })
 
 }
-
 
 export const logout = () => async (dispatch) => {
   console.log("logout");
@@ -191,6 +190,11 @@ export const getMemories = (page) => async (dispatch) => {
       dispatch({
         type: GET_ALL_MEMORIES_SUCCESS,
         payload: res.data
+      });
+
+      dispatch({
+        type: SEARCH_MEMORIES_FAILED,
+        payload: null
       })
     })
     .catch((err) => {
@@ -225,7 +229,7 @@ export const getSingleMemories = (data) => async (dispatch) => {
 
   axios.get(url, config)
     .then((res) => {
-      console.log(res.data.post, "post");
+     
       dispatch({
         type: GET_SINGLE_MEMORY_SUCCESS,
         payload: res.data.post
@@ -249,7 +253,6 @@ export const getSingleMemories = (data) => async (dispatch) => {
 }
 
 export const searchMemories = (data) => async (dispatch) => {
-  console.log(data, "data");
   const { params, tags } = data;
 
   const config = {
@@ -269,14 +272,14 @@ export const searchMemories = (data) => async (dispatch) => {
     .then((res) => {
       console.log(res.data.data);
       dispatch({
-        type: GET_ALL_MEMORIES_SUCCESS,
-        payload: res.data.data
+        type: SEARCH_MEMORIES,
+        payload: res.data
       })
     })
     .catch((err) => {
       console.log(err);
       dispatch({
-        type: GET_ALL_MEMORIES_FAILED,
+        type: SEARCH_MEMORIES_FAILED,
         payload: err
       })
     })
@@ -290,7 +293,7 @@ export const searchMemories = (data) => async (dispatch) => {
 
 
 export const createMemory = (data) => async (dispatch, getState) => {
-  console.log(data)
+
   const config = {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -300,11 +303,10 @@ export const createMemory = (data) => async (dispatch, getState) => {
 
   const url = `http://localhost:5000/posts`;
 
-
-  // dispatch({
-  //   type: LOADING,
-  //   payload: null
-  // })
+  dispatch({
+    type: LOADING,
+    payload: null
+  })
 
   await axios.post(url, data, config)
     .then((result) => {
@@ -335,21 +337,17 @@ export const updateMemory = (data, id) => async (dispatch, getState) => {
 
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${getState().auth.token}`,
     },
   };
 
-  const { title, name, message } = data;
-
-
-  const body = JSON.stringify({ title, name, message });
   dispatch({
     type: LOADING,
     payload: null
   })
 
-  axios.patch(url, body, config)
+  axios.patch(url, data, config)
     .then((result) => {
       console.log(result);
       dispatch({
@@ -381,18 +379,33 @@ export const resetStatus = () => async (dispatch) => {
 }
 
 
-
-export const createPost = (data) => async (dispatch, getState) => {
-  console.log(data, "data");
+export const addComments = (data) => async (dispatch) => {
+  const {id, comment} = data;
+  console.log(id, comment);
   const config = {
     headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${getState().auth.token}`,
+      "Content-Type": "application/json",
     },
   };
 
-  const url = `http://localhost:5000/upload`;
+  const url = `http://localhost:5000/posts/${id}/comment`;
+
+  dispatch({
+    type: LOADING,
+    payload: null
+  })
 
   await axios.post(url, data, config)
-
+    .then((res) => {
+      dispatch({
+        type: ADD_COMMENT_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: ADD_COMMENT_FAILED,
+        payload: null
+      })
+    })
 }

@@ -26,7 +26,7 @@ const Header = () => {
           <button onClick={() => {
             navigate("/add-memory")
           }} className='btn'>+Add Memory</button>
-          <button onClick={() => dispatch(logout())} className='btn'>Logout</button>
+          <button onClick={() => dispatch(logout())} className='btn logout'>Logout</button>
 
 
         </nav> : <nav>

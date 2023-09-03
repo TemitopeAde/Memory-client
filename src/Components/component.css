@@ -64,17 +64,22 @@
   text-decoration: none;
   color: green;
   font-size: 1.62rem;
+  text-transform: capitalize;
 }
 
 .search-div {
   display: grid;
-  grid-template-columns: 200px 200px 100px;
-  gap: 1rem;
+  grid-template-columns: 300px 300px 150px;
+  gap: 2rem;
 }
 
 .css-c789a6-MuiStack-root {
   padding: 0 3rem;
   margin-top: 3rem;
+}
+
+.logout {
+  background: crimson !important;
 }
 
 .form-groups button {

@@ -16,11 +16,8 @@ const FormModal = ({ currentId, setCurrentId }) => {
     },
   };
 
-  console.log(currentId, "currentId");
-  // let subtitle;
   const [isOpen, setIsOpen] = React.useState(currentId ? true: false);
-  console.log(isOpen, "open");
-
+  
   function openModal() {
     setIsOpen(true);
   }

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form"
-import { useDispatch } from 'react-redux';
-import { createMemory } from '../state/actions/index';
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
+import { createMemory, getMemories } from '../state/actions/index';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -12,23 +16,34 @@ function App() {
   } = useForm();
   const [title, setTitle] = useState("");
   const [memory, setMemory] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const dispatch = useDispatch();
+  const statusText = useSelector((res) => res.memory.statusText);
 
   const handleFormSubmit = async (e) => {
+    console.log(e);
+    
     const formData = new FormData();
     formData.append('title', title);
     formData.append('message', memory);
     formData.append('image', image);
     dispatch(createMemory(formData));
+    const notify = () => toast("Memories added successfully");
+    dispatch(getMemories());
+
     setTitle("")
     setMemory("")
-    setImage("")
+    // setImage("")
+    notify()
   };
 
+  if (statusText === "Created") {
+    navigate("/")
+  }
 
   return (
     <div className='add-memory'>
+      <ToastContainer />
       <h1>Add a new Memory</h1>
       <form style={{ display: "grid", gap: "15px" }} onSubmit={handleSubmit(handleFormSubmit)} >
         <div>
@@ -48,7 +63,7 @@ function App() {
 
         <div>
           <label htmlFor="">Memories</label>
-          <textarea {...register("message", { required: true })} onChange={(e) => setMemory(e.target.value)} className='form-control'>
+          <textarea value={memory} {...register("message", { required: true })} onChange={(e) => setMemory(e.target.value)} className='form-control'>
 
           </textarea>
           {errors.message?.type === "required" && (

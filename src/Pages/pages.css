@@ -22,13 +22,33 @@
   margin-bottom: 5px;
 }
 
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
 .form-control {
+  
+
+  display: block;
   width: 100%;
-  height: 40px;
-  padding-left: 8px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-group button {
@@ -47,7 +67,6 @@
   background-color: #45a049;
 }
 
-
 .error {
   color: crimson;
 }
@@ -56,7 +75,6 @@
   background-color: gray;
   cursor: not-allowed;
 }
-
 
 .form-controls {
   width: 100%;
@@ -73,7 +91,7 @@
 }
 
 .memory-img {
-  height: 400px;
+  height: auto;
   object-fit: cover;
   width: 100%;
 }
@@ -91,4 +109,32 @@
 .meta h1 {
   font-size: 2rem;
   text-transform: capitalize;
+}
+
+.comment-section {
+  /* max-width: 600px; */
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Style for individual comments */
+.comment {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* Style for comment timestamps */
+.timestamp {
+  color: #888;
+  font-size: 12px;
+}
+
+/* Style for reply links */
+.reply a {
+  color: #3498db;
+  text-decoration: none;
+  margin-left: 10px;
+  font-weight: bold;
 }

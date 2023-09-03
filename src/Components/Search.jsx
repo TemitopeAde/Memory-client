@@ -2,27 +2,18 @@ import React from 'react'
 import { searchMemories } from '../state/actions';
 import { useDispatch,  } from 'react-redux';
 import { Formik, Form, Field } from "formik";
-import { getMemories } from '../state/actions';
 
 
 const Search = () => {
   const dispatch = useDispatch();
   
   const submitForm = (values) => {
-    const { params, tags } = values;
-    
-    if (params && tags) {
-      dispatch(searchMemories(values))
-    } else {
-      
-    }
-
     dispatch(searchMemories(values))
   };
 
   const initialValues = {
     params: "",
-    tags: ""
+    tags: "tag"
   };
 
   const validate = (values) => {
@@ -78,7 +69,7 @@ const Search = () => {
                       />
                       
                     </div>
-                    <div className='form-groups'>
+                    {/* <div className='form-groups'>
                       <Field
                         type="text"
                         name="tags"
@@ -94,7 +85,7 @@ const Search = () => {
                         }
                       />
 
-                    </div>
+                    </div> */}
                     <div className="form-groups">
                       <button
                         onClick={() => handleSubmit}
@@ -111,14 +102,14 @@ const Search = () => {
                       </button>
 
                     </div>
-                    <div className="form-groups">
+                    {/* <div className="form-groups">
                       <button
                         onClick={() => dispatch(getMemories())}
                       >
                         Refresh
                       </button>
 
-                    </div>
+                    </div> */}
                   </div>
 
                 </Form>

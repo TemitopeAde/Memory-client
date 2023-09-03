@@ -1,8 +1,10 @@
-import { ADD_COMMENT_FAILED, ADD_COMMENT_SUCCESS, ADD_MEMORIES_SUCCESS, EDIT_MEMORIES_FAILED, EDIT_MEMORIES_SUCCESS, GET_ALL_MEMORIES_FAILED, GET_ALL_MEMORIES_SUCCESS, GET_SINGLE_MEMORY_SUCCESS, RESET_STATUS } from "../actions/types";
+import { ADD_COMMENT_FAILED, ADD_COMMENT_SUCCESS, ADD_MEMORIES_SUCCESS, EDIT_MEMORIES_FAILED, EDIT_MEMORIES_SUCCESS, GET_ALL_MEMORIES_FAILED, GET_ALL_MEMORIES_SUCCESS, GET_COMMENT, GET_SINGLE_MEMORY_SUCCESS, RESET_STATUS, SEARCH_MEMORIES, SEARCH_MEMORIES_FAILED } from "../actions/types";
 
 
 const initialState = {
+  addComment: false,
   allMemories: [],
+  searchMemories: [],
   memories: {},
   allComments: [],
   addMemory: "",
@@ -15,6 +17,27 @@ const initialState = {
 
 const memoryReducer = (state = initialState, action) => {
   const { type, payload } = action;
+
+  if (type === GET_COMMENT) {
+    return {
+      ...state,
+      allComments: payload
+    }
+  }
+
+  if (type === SEARCH_MEMORIES) {
+    return {
+      ...state,
+      searchMemories: payload
+    }
+  }
+
+  if (type === SEARCH_MEMORIES_FAILED) {
+    return {
+      ...state,
+      searchMemories: []
+    }
+  }
 
   if (type === RESET_STATUS) {
     return {
@@ -36,7 +59,7 @@ const memoryReducer = (state = initialState, action) => {
   }
   
   if (type === ADD_MEMORIES_SUCCESS) {
-    // console.log(payload.statusText);
+    console.log(payload.statusText);
     return {
       ...state,
       addMemory: "Memory added",
@@ -47,9 +70,9 @@ const memoryReducer = (state = initialState, action) => {
   if (type === GET_ALL_MEMORIES_SUCCESS) {
     return {
       ...state,
-      allMemories: payload.data,
-      currentPage: payload.currentPage,
-      numberOfPage: payload.numberOfPage
+      allMemories: payload,
+      currentPage: payload,
+      numberOfPage: payload,
     }
   }
 
@@ -68,12 +91,17 @@ const memoryReducer = (state = initialState, action) => {
   }
 
   if (type === ADD_COMMENT_SUCCESS) {
-
+    return {
+      ...state,
+      addComment: true
+    }
   }
 
-
   if (type === ADD_COMMENT_FAILED) {
-
+    return {
+      ...state,
+      addComment: false
+    }
   }
 
   return state

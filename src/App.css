@@ -160,14 +160,8 @@ body.fixed .header-fixed .header-limiter nav {
   }
 }
 
-/*
-	 We are clearing the body's margin and padding, so that the header fits properly.
-	 We are also adding a height to demonstrate the scrolling behavior. You can remove
-	 these styles.
- */
 
 body {
   margin: 0;
   padding: 0;
-  height: 1500px;
 }

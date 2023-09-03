@@ -8,8 +8,6 @@ import Signin from './Pages/Signin';
 import AddMemoryForm from './Components/AddMemoryForm';
 
 
-
-
 function App() {
   return (
     <AnimatePresence>

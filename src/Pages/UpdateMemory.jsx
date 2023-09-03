@@ -1,33 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useForm } from "react-hook-form"
 import { useSelector, useDispatch } from 'react-redux';
 import { createMemory, updateMemory } from '../state/actions';
-import Loader from '../Components/Loader'; 
-import { Navigate } from 'react-router-dom';
-
+import Loader from '../Components/Loader';
+import { useNavigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UpdateMemory = ({ currentId }) => {
   const [postData, setPostData] = useState({})
   const loading = useSelector((state) => state.loader.loading);
-  const post = useSelector((state) => currentId ? state.memory.allMemories.find((p) => p._id === currentId) : null)
-
-  console.log(post, "post");
-  // console.log(postData, "postdata");
-
+  const post = useSelector((state) => currentId ? state.memory?.allMemories?.data.find((p) => p._id === currentId) : null)
   const initialValues = {
-    title: post?.title,
-    message: post?.message,
-    name: post?.name,
+    title: post.title,
+    message: post.message,
+    image: post.name,
   };
+  const navigate = useNavigate();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const [title, setTitle] = useState(initialValues.title);
+  const [memory, setMemory] = useState(initialValues.message);
+  const [image, setImage] = useState(initialValues.image);
+  const statusText = useSelector((res) => res.memory.statusText);
 
-  // const initialValues = {
-  //   title: "",
-  //   message: "",
-  //   name: "",
-  // };
+  if (statusText === "Created") {
+    console.log("yes")
+    navigate("/")
+  }
 
-
+  
   useEffect(() => {
     if (post) setPostData(post)
   }, [post])
@@ -36,33 +43,22 @@ const UpdateMemory = ({ currentId }) => {
   const dispatch = useDispatch();
   const updatedPost = useSelector((state) => state.memory.updatedPost);
 
-  
 
-  const validate = (values) => {
-    let errors = {};
-    if (!values.title) {
-      errors.title = "Title is required";
-    } else if (values.title.length < 2) {
-      errors.title = "Title is too short";
-    }
-
-    if (!values.message) {
-      errors.message = "Message is required"
-    }
-
-    if (!values.name) {
-      errors.name = "Name is required"
-    }
-
-
-
-    return errors;
-  };
-  const submitForm = (values) => {
-    if (currentId) {
-      dispatch(updateMemory(values, currentId))
-    } else {
-      dispatch(createMemory(values))
+  const submitForm = async (e) => {
+    try {
+      if (currentId) {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('message', memory);
+        formData.append('image', image);
+        const notify = () => toast("Memories updated successfully");
+        notify();
+        dispatch(updateMemory(formData, currentId))
+      } else {
+        dispatch(createMemory(FormData))
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -73,117 +69,57 @@ const UpdateMemory = ({ currentId }) => {
   // if (updatedPost || !loading) return <Navigate to="/" />
 
   return (
-    <div>
-      <Formik
-        initialValues={initialValues}
-        validate={validate}
-        onSubmit={submitForm}
-      >
-        {
-          (formik) => {
-            const {
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              touched,
-              handleBlur,
-              isValid,
-              dirty,
-            } = formik;
-            return (
-              <Form>
-                <div className="form-group">
-                  <label htmlFor="">Title</label>
-                  <Field
-                    type="text"
-                    name="title"
-                    value={values.title}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.title &&
-                        touched.title
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  >
+    <div className='add-memory'>
+      <ToastContainer />
+      <h1>Update Memory</h1>
+      <form style={{ display: "grid", gap: "15px" }} onSubmit={handleSubmit(submitForm)} >
+        <div>
+          <label htmlFor="">Title</label>
+          <input
+            {...register("title", { required: false })}
+            className='form-control'
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
 
-                  </Field>
-                  <ErrorMessage
-                    name="title"
-                    component="span"
-                    className="error"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="">Name</label>
-                  <Field
-                    type="text"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.name &&
-                        touched.name
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  >
-                  </Field>
-                  <ErrorMessage
-                    name="name"
-                    component="span"
-                    className="error"
-                  />
-                </div>
-                <div className='form-group'>
-                  <label htmlFor="email">Message</label>
-                  <Field
-                    type="text"
-                    name="message"
-                    value={values.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.message &&
-                        touched.message
-                        ? "input-error form-control"
-                        : "form-control"
-                    }
-                  />
-                  <ErrorMessage
-                    name="message"
-                    component="span"
-                    className="error"
-                  />
-                </div>
+          {errors.title?.type === "required" && (
+            <p role="alert">Title is required</p>
+          )}
+        </div>
 
-                <div className="form-group">
-                  <button
-                    onClick={() => handleSubmit}
-                    type="submit"
-                    className={
-                      dirty && isValid
-                        ? "btn login-btn"
-                        : "login-btn disabled-btn"
-                    }
-                    disabled={!(dirty && isValid)}
-                    style={{ flexBasis: "35%" }}
-                  >
-                    {post ? "Edit memory" : "Create now"}
+        <div>
+          <label htmlFor="">Memories</label>
+          <textarea value={memory} {...register("message", { required: false })} onChange={(e) => setMemory(e.target.value)} className='form-control'>
 
-                  </button>
+          </textarea>
+          {errors.message?.type === "required" && (
+            <p role="alert">Memories is required</p>
+          )}
+        </div>
 
-                </div>
-              </Form>
-            )
-          }
-        }
-      </Formik>
+        <div>
+          <input
+
+            {...register("image", { required: false })}
+            type="file"
+            value={initialValues.image}
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          {errors.image?.type === "required" && (
+            <p role="alert">Image is required</p>
+          )}
+        </div>
+
+        <div className='add-btn'>
+          <button type="submit">Submit</button>
+        </div>
+
+
+      </form>
     </div>
-  )
+  );
 }
 
 export default UpdateMemory
