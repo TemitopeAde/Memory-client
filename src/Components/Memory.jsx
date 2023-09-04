@@ -12,6 +12,7 @@ import { PaginationItem } from '@mui/material';
 import { useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import FormModal from './FormModal';
+import img from '../static/image/refresh.png';
 
 
 const Memory = () => {
@@ -72,10 +73,19 @@ const Memory = () => {
       <div className='wrapper'>
         <h2 className='memories-title'>My Memories</h2>
         <Search />
+        <div style={{ padding: '1rem 0'}}>
+          <button 
+            onClick={() => dispatch(getMemories())} 
+            style={{ cursor: "pointer", background: "none", outline: "none", border: "none" }}
+          >
+            <img style={{ width: '50px'}} src={img} alt="" />
+          </button>
+        </div>
+        
         {searchMemories.data.length >= 1 ? searchMemories.data.map((res, index) => {
           return (
-            <div className='card-grid'>
-              <div key={index} className='card-memories'>
+            <div  key={index} className='card-grid'>
+              <div className='card-memories'>
                 <div className='img-overlay'>
                   <img src={res.image} alt="memories" />
                   {token && <div className="overlay">
@@ -120,6 +130,14 @@ const Memory = () => {
     <div className='wrapper'>
       <h2 className='memories-title'>My Memories</h2>
       <Search />
+      <div style={{ padding: '1rem 0' }}>
+        <button 
+          style={{ cursor: "pointer", background: "none", outline: "none", border: "none" }}
+          onClick={() => dispatch(getMemories())}
+        >
+          <img style={{ width: '50px' }} src={img} alt="" />
+        </button>
+      </div>
       <div className='card-grid'>
 
         {memories.data?.length >= 1 ? memories.data?.map((res, index) => {

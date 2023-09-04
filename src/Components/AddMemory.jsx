@@ -21,8 +21,7 @@ function App() {
   const statusText = useSelector((res) => res.memory.statusText);
 
   const handleFormSubmit = async (e) => {
-    console.log(e);
-    
+ 
     const formData = new FormData();
     formData.append('title', title);
     formData.append('message', memory);

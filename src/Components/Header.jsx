@@ -1,10 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { logout } from '../state/actions';
-import Modal from 'react-modal';
-// import Addmemories from '../Pages/Addmemories';
 import FormModal from './FormModal';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +14,6 @@ const Header = () => {
   
   return (
     <header className="header-fixed wrapper">
-
       <div className="header-limiter">
         <h1>
           <Link to="/">Temitope<span>Memories</span></Link>

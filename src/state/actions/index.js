@@ -253,14 +253,14 @@ export const getSingleMemories = (data) => async (dispatch) => {
 }
 
 export const searchMemories = (data) => async (dispatch) => {
-  const { params, tags } = data;
-
+  const { title: params, tags } = data;
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
-
+  console.log(params);
   const url = `http://localhost:5000/posts/search?tags=${tags}&searchQuery=${params}`;
 
   dispatch({

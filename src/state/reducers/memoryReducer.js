@@ -50,7 +50,8 @@ const memoryReducer = (state = initialState, action) => {
     console.log(payload.data.updatedPost);
     return {
       ...state,
-      updatedPost: payload.data.updatedPost
+      updatedPost: payload.data.updatedPost,
+      statusText: payload.statusText
     }
   }
 
@@ -59,7 +60,7 @@ const memoryReducer = (state = initialState, action) => {
   }
   
   if (type === ADD_MEMORIES_SUCCESS) {
-    console.log(payload.statusText);
+    
     return {
       ...state,
       addMemory: "Memory added",
@@ -68,6 +69,7 @@ const memoryReducer = (state = initialState, action) => {
   }
 
   if (type === GET_ALL_MEMORIES_SUCCESS) {
+    console.log(payload, "payload");
     return {
       ...state,
       allMemories: payload,

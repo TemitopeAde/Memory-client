@@ -13,10 +13,11 @@ const UpdateMemory = ({ currentId }) => {
   const [postData, setPostData] = useState({})
   const loading = useSelector((state) => state.loader.loading);
   const post = useSelector((state) => currentId ? state.memory?.allMemories?.data.find((p) => p._id === currentId) : null)
+  console.log(post);
   const initialValues = {
     title: post.title,
     message: post.message,
-    image: post.name,
+    image: post.image,
   };
   const navigate = useNavigate();
   const {
@@ -34,6 +35,7 @@ const UpdateMemory = ({ currentId }) => {
     navigate("/")
   }
 
+  console.log(statusText)
   
   useEffect(() => {
     if (post) setPostData(post)
@@ -64,8 +66,7 @@ const UpdateMemory = ({ currentId }) => {
 
   if (loading) return <Loader />
 
-  console.log(updatedPost, loading);
-
+ 
   // if (updatedPost || !loading) return <Navigate to="/" />
 
   return (
@@ -103,7 +104,7 @@ const UpdateMemory = ({ currentId }) => {
 
             {...register("image", { required: false })}
             type="file"
-            value={initialValues.image}
+            src={initialValues.image}
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
           />
